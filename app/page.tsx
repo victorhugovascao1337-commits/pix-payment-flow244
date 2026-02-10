@@ -13,16 +13,18 @@ import { FooterSection } from "@/components/footer-section";
 import { usePageViewTracking, usePreserveUTMParams } from "@/hooks/use-utm-tracking";
 import { trackFacebookViewContent } from "@/lib/facebook/facebook-client";
 
-export default function Page() {
+import { Suspense } from "react";
+
+function HomeContent() {
   // Preserve UTM params in URL
   usePreserveUTMParams();
-  
+
   // Track page view
   usePageViewTracking("Landing Page");
 
   useEffect(() => {
     console.log("[UTMIFY] 🏠 Landing Page carregada");
-    
+
     // Track Facebook ViewContent
     trackFacebookViewContent("Álbum Panini Copa 2026", 119.9, "BRL");
   }, []);
@@ -74,5 +76,13 @@ export default function Page() {
       {/* Footer */}
       <FooterSection />
     </main>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={null}>
+      <HomeContent />
+    </Suspense>
   );
 }
