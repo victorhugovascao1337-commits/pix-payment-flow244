@@ -178,7 +178,7 @@ async function sendToUtmify(apiToken: string, payload: UtmifyPayload): Promise<b
     })
 
     const responseText = await response.text()
-    
+
     console.log("[UTMIFY] 📥 Status HTTP:", response.status)
     console.log("[UTMIFY] 📥 Resposta:", responseText)
 
@@ -204,12 +204,18 @@ async function sendToUtmify(apiToken: string, payload: UtmifyPayload): Promise<b
  */
 export async function sendUtmifyPendingEvent(transaction: TransactionData): Promise<boolean> {
   console.log("[UTMIFY] ⏳ Iniciando envio de evento PENDING...")
-  
+
   const apiToken = process.env.UTMIFY_API_TOKEN
 
   if (!apiToken) {
     console.error("[UTMIFY] ❌ UTMIFY_API_TOKEN não configurado nas variáveis de ambiente!")
     console.error("[UTMIFY] ❌ Configure em: .env.local ou Vercel Dashboard")
+    return false
+  }
+
+  if (apiToken === "seu_token_aqui") {
+    console.warn("[UTMIFY] ⚠️ UTMIFY_API_TOKEN está com o valor padrão (placeholder).")
+    console.warn("[UTMIFY] ⚠️ Configure o token real do UTMify para rastrear as vendas.")
     return false
   }
 
@@ -226,7 +232,7 @@ export async function sendUtmifyPaidEvent(transaction: TransactionData): Promise
   console.log("[UTMIFY] 💰 Transaction ID:", transaction.orderId)
   console.log("[UTMIFY] 💰 Valor:", transaction.amount)
   console.log("[UTMIFY] 💰 Cliente:", transaction.customerName)
-  
+
   const apiToken = process.env.UTMIFY_API_TOKEN
 
   if (!apiToken) {
@@ -256,7 +262,7 @@ export async function sendUtmifyPaidEvent(transaction: TransactionData): Promise
  */
 export async function sendUtmifyRefusedEvent(transaction: TransactionData): Promise<boolean> {
   console.log("[UTMIFY] 🚫 Iniciando envio de evento REFUSED...")
-  
+
   const apiToken = process.env.UTMIFY_API_TOKEN
 
   if (!apiToken) {
@@ -273,7 +279,7 @@ export async function sendUtmifyRefusedEvent(transaction: TransactionData): Prom
  */
 export async function sendUtmifyRefundedEvent(transaction: TransactionData): Promise<boolean> {
   console.log("[UTMIFY] 💸 Iniciando envio de evento REFUNDED...")
-  
+
   const apiToken = process.env.UTMIFY_API_TOKEN
 
   if (!apiToken) {
