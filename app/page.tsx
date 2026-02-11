@@ -30,20 +30,23 @@ function HomeContent() {
   }, []);
   return (
     <main className="mx-auto min-h-screen w-full max-w-md bg-card shadow-sm">
-      {/* Header - Panini Logo */}
-      <header className="flex items-center justify-center bg-card px-4 py-4">
-        <Image
-          src="/images/logo-panini-256.png"
-          alt="Panini Logo"
-          width={150}
-          height={54}
-          style={{ width: "auto", height: "auto" }}
-          priority
-        />
-      </header>
+      {/* Sticky Header - Logo + Countdown */}
+      <div className="sticky top-0 z-50 bg-card shadow-md">
+        {/* Header - Panini Logo */}
+        <header className="flex items-center justify-center px-4 py-3">
+          <Image
+            src="/images/logo-panini-256.png"
+            alt="Panini Logo"
+            width={150}
+            height={54}
+            style={{ width: "auto", height: "auto" }}
+            priority
+          />
+        </header>
 
-      {/* Countdown & Urgency */}
-      <CountdownTimer />
+        {/* Countdown & Urgency */}
+        <CountdownTimer />
+      </div>
 
       {/* CTA - Compra Unica */}
       <div className="px-4 py-3">

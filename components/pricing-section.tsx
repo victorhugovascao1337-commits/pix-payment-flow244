@@ -80,9 +80,9 @@ export function PricingSection() {
             key={kit.id}
             type="button"
             onClick={() => setSelected(kit.id)}
-            className={`relative w-full rounded-xl border-2 bg-card p-4 text-left transition-all ${selected === kit.id
-              ? "border-[#2d8c3c] shadow-lg"
-              : "border-border"
+            className={`relative w-full rounded-xl border-2 p-4 text-left transition-all ${selected === kit.id
+                ? "border-[#2d8c3c] bg-[#e8f5e9] shadow-lg"
+                : "border-border bg-card"
               }`}
           >
             {/* Discount badge top right */}
