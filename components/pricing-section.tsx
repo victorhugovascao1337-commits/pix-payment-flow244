@@ -12,10 +12,11 @@ const kits = [
     name: "Kit Básico",
     description: "1 Álbum Capa Dura + 10 Pacotes",
     stickers: 50,
-    oldPrice: "R$ 69,90",
-    newPrice: "R$ 39,90",
-    discount: "-43%",
-    savings: "Você economiza R$ 30,00",
+    oldPrice: "R$ 99,90",
+    newPrice: "R$ 59,00",
+    discount: "-41%",
+    savings: "Você economiza R$ 40,90",
+    checkoutUrl: "https://seguro.paninilojas.com/checkout/Z-11LMK02CZW26",
     badge: null,
     badgeColor: "",
   },
@@ -24,10 +25,11 @@ const kits = [
     name: "Kit Iniciante",
     description: "1 Álbum Capa Dura + 30 Pacotes",
     stickers: 150,
-    oldPrice: "R$ 109,90",
-    newPrice: "R$ 59,90",
-    discount: "-34%",
-    savings: "Você economiza R$ 50,00",
+    oldPrice: "R$ 139,90",
+    newPrice: "R$ 79,00",
+    discount: "-44%",
+    savings: "Você economiza R$ 60,90",
+    checkoutUrl: "https://seguro.paninilojas.com/checkout/Z-11MC102VLN26",
     badge: null,
     badgeColor: "",
   },
@@ -36,10 +38,11 @@ const kits = [
     name: "Kit Campeão",
     description: "1 Álbum Capa Dura + 60 Pacotes",
     stickers: 300,
-    oldPrice: "R$ 175,90",
-    newPrice: "R$ 97,90",
-    discount: "-44%",
-    savings: "Você economiza R$ 78,00",
+    oldPrice: "R$ 249,90",
+    newPrice: "R$ 149,00",
+    discount: "-40%",
+    savings: "Você economiza R$ 100,90",
+    checkoutUrl: "https://seguro.paninilojas.com/checkout/Z-115V602CSY26",
     badge: "MAIS VENDIDO",
     badgeColor: "bg-[#2d8c3c]",
   },
@@ -48,10 +51,11 @@ const kits = [
     name: "Kit Colecionador",
     description: "1 Álbum Capa Dura + 90 Pacotes",
     stickers: 450,
-    oldPrice: "R$ 267,90",
-    newPrice: "R$ 119,90",
-    discount: "-55%",
-    savings: "Você economiza R$ 148,00",
+    oldPrice: "R$ 349,90",
+    newPrice: "R$ 199,00",
+    discount: "-43%",
+    savings: "Você economiza R$ 150,90",
+    checkoutUrl: "https://seguro.paninilojas.com/checkout/Z-117P902H9626",
     badge: "MELHOR CUSTO",
     badgeColor: "bg-[#d4a017]",
   },
@@ -76,11 +80,10 @@ export function PricingSection() {
             key={kit.id}
             type="button"
             onClick={() => setSelected(kit.id)}
-            className={`relative w-full rounded-xl border-2 bg-card p-4 text-left transition-all ${
-              selected === kit.id
-                ? "border-[#2d8c3c] shadow-lg"
-                : "border-border"
-            }`}
+            className={`relative w-full rounded-xl border-2 bg-card p-4 text-left transition-all ${selected === kit.id
+              ? "border-[#2d8c3c] shadow-lg"
+              : "border-border"
+              }`}
           >
             {/* Discount badge top right */}
             <span className="absolute -right-1 -top-3 rounded-full bg-[#e74c3c] px-2.5 py-1 text-xs font-bold text-white">
@@ -91,11 +94,10 @@ export function PricingSection() {
               {/* Radio */}
               <div className="mt-1 flex-shrink-0">
                 <div
-                  className={`flex h-5 w-5 items-center justify-center rounded-full border-2 ${
-                    selected === kit.id
-                      ? "border-[#2d8c3c]"
-                      : "border-foreground/30"
-                  }`}
+                  className={`flex h-5 w-5 items-center justify-center rounded-full border-2 ${selected === kit.id
+                    ? "border-[#2d8c3c]"
+                    : "border-foreground/30"
+                    }`}
                 >
                   {selected === kit.id && (
                     <div className="h-3 w-3 rounded-full bg-[#2d8c3c]" />
@@ -161,23 +163,23 @@ export function PricingSection() {
       {/* CTA Button */}
       <button
         type="button"
-            onClick={() => {
+        onClick={() => {
           // Track InitiateCheckout event
           const utmParams = getUTMParams();
           const selectedKit = kits.find(k => k.id === selected);
-          
+
           console.log("[UTMIFY] 🛒 InitiateCheckout - Kit:", selectedKit?.name, "UTM:", utmParams);
-          
+
           // Extract price from string (e.g., "R$ 119,90" -> 119.90)
           const priceStr = selectedKit?.newPrice.replace("R$ ", "").replace(",", ".") || "0";
           const price = parseFloat(priceStr);
-          
+
           // Track Facebook InitiateCheckout
           trackFacebookInitiateCheckout(price, "BRL", 1);
-          
+
           // Track AddToCart
           trackFacebookAddToCart(price, "BRL", selectedKit?.name);
-          
+
           // Track click event
           if (typeof window !== "undefined" && (window as any).utmify) {
             try {
@@ -191,10 +193,11 @@ export function PricingSection() {
               console.error("[UTMIFY] Erro ao trackear InitiateCheckout:", error);
             }
           }
-          
-          // Preserve UTM params in navigation
-          const checkoutUrl = buildURLWithUTM("/checkout", { kit: selected });
-          router.push(checkoutUrl);
+
+          // Redirect to external checkout URL in same tab
+          if (selectedKit?.checkoutUrl) {
+            window.location.href = selectedKit.checkoutUrl;
+          }
         }}
         className="mt-6 w-full rounded-xl bg-[#2d8c3c] px-6 py-4 text-base font-extrabold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#236e30] active:scale-[0.98]"
       >
