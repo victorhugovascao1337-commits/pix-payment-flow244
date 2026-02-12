@@ -16,7 +16,7 @@ const kits = [
     newPrice: "R$ 59,00",
     discount: "-41%",
     savings: "Você economiza R$ 40,90",
-    checkoutUrl: "https://seguro.paninilojas.com/checkout/Z-11LMK02CZW26",
+    checkoutUrl: "https://seguro.paninilojas.com/api/public/shopify?product=2813552918674&store=28135",
     badge: null,
     badgeColor: "",
   },
@@ -29,7 +29,7 @@ const kits = [
     newPrice: "R$ 79,00",
     discount: "-44%",
     savings: "Você economiza R$ 60,90",
-    checkoutUrl: "https://seguro.paninilojas.com/checkout/Z-11MC102VLN26",
+    checkoutUrl: "https://seguro.paninilojas.com/api/public/shopify?product=2813528419493&store=28135",
     badge: null,
     badgeColor: "",
   },
@@ -42,7 +42,7 @@ const kits = [
     newPrice: "R$ 149,00",
     discount: "-40%",
     savings: "Você economiza R$ 100,90",
-    checkoutUrl: "https://seguro.paninilojas.com/checkout/Z-115V602CSY26",
+    checkoutUrl: "https://seguro.paninilojas.com/api/public/shopify?product=2813572883525&store=28135",
     badge: "MAIS VENDIDO",
     badgeColor: "bg-[#2d8c3c]",
   },
@@ -55,7 +55,7 @@ const kits = [
     newPrice: "R$ 199,00",
     discount: "-43%",
     savings: "Você economiza R$ 150,90",
-    checkoutUrl: "https://seguro.paninilojas.com/checkout/Z-117P902H9626",
+    checkoutUrl: "https://seguro.paninilojas.com/api/public/shopify?product=2813562826242&store=28135",
     badge: "MELHOR CUSTO",
     badgeColor: "bg-[#d4a017]",
   },
@@ -81,8 +81,8 @@ export function PricingSection() {
             type="button"
             onClick={() => setSelected(kit.id)}
             className={`relative w-full rounded-xl border-2 p-4 text-left transition-all ${selected === kit.id
-                ? "border-[#2d8c3c] bg-[#e8f5e9] shadow-lg"
-                : "border-border bg-card"
+              ? "border-[#2d8c3c] bg-[#e8f5e9] shadow-lg"
+              : "border-border bg-card"
               }`}
           >
             {/* Discount badge top right */}
