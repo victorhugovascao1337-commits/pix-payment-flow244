@@ -194,9 +194,11 @@ export function PricingSection() {
             }
           }
 
-          // Redirect to external checkout URL in same tab
+          // Redirect to external checkout URL in same tab with UTM params
           if (selectedKit?.checkoutUrl) {
-            window.location.href = selectedKit.checkoutUrl;
+            const finalUrl = buildURLWithUTM(selectedKit.checkoutUrl);
+            console.log("[UTMIFY] 🚀 Redirecting to:", finalUrl);
+            window.location.href = finalUrl;
           }
         }}
         className="mt-6 w-full rounded-xl bg-[#2d8c3c] px-6 py-4 text-base font-extrabold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#236e30] active:scale-[0.98]"

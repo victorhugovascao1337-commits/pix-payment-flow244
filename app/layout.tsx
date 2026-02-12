@@ -69,7 +69,6 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* UTMFY UTMs Script */}
         <script
           src="https://cdn.utmify.com.br/scripts/utms/latest.js"
           data-utmify-prevent-xcod-sck
@@ -96,10 +95,9 @@ export default function RootLayout({
                   
                   // Save UTM params if any exist (even if empty strings, we'll filter later)
                   var hasUTM = utmData.utm_source || utmData.utm_campaign || utmData.utm_medium || 
-                               utmData.utm_content || utmData.utm_term || utmData.src || utmData.sck;
+                                utmData.utm_content || utmData.utm_term || utmData.src || utmData.sck;
                   
                   if (hasUTM) {
-                    // Remove empty strings before saving
                     var cleanUtmData = {};
                     Object.keys(utmData).forEach(function(key) {
                       if (utmData[key]) {
@@ -111,54 +109,7 @@ export default function RootLayout({
                       localStorage.setItem('panini_utm_params', JSON.stringify(cleanUtmData));
                       console.log('[UTMIFY] ✅ UTM parameters saved:', cleanUtmData);
                     }
-                  } else {
-                    // If no UTM in URL, try to load from localStorage to preserve across pages
-                    var saved = localStorage.getItem('panini_utm_params');
-                    if (saved) {
-                      console.log('[UTMIFY] 📖 Using saved UTM params:', JSON.parse(saved));
-                    }
                   }
-                  
-                  // Intercept all link clicks and form submissions to preserve UTM params
-                  document.addEventListener('click', function(e) {
-                    var target = e.target;
-                    while (target && target.tagName !== 'A') {
-                      target = target.parentElement;
-                    }
-                    if (target && target.href && target.href.startsWith(window.location.origin)) {
-                      var savedUtm = localStorage.getItem('panini_utm_params');
-                      if (savedUtm) {
-                        try {
-                          var utm = JSON.parse(savedUtm);
-                          var url = new URL(target.href);
-                          if (utm.utm_source && !url.searchParams.has('utm_source')) {
-                            url.searchParams.set('utm_source', utm.utm_source);
-                          }
-                          if (utm.utm_medium && !url.searchParams.has('utm_medium')) {
-                            url.searchParams.set('utm_medium', utm.utm_medium);
-                          }
-                          if (utm.utm_campaign && !url.searchParams.has('utm_campaign')) {
-                            url.searchParams.set('utm_campaign', utm.utm_campaign);
-                          }
-                          if (utm.utm_content && !url.searchParams.has('utm_content')) {
-                            url.searchParams.set('utm_content', utm.utm_content);
-                          }
-                          if (utm.utm_term && !url.searchParams.has('utm_term')) {
-                            url.searchParams.set('utm_term', utm.utm_term);
-                          }
-                          if (utm.src && !url.searchParams.has('src')) {
-                            url.searchParams.set('src', utm.src);
-                          }
-                          if (utm.sck && !url.searchParams.has('sck')) {
-                            url.searchParams.set('sck', utm.sck);
-                          }
-                          target.href = url.toString();
-                        } catch (err) {
-                          console.error('[UTMIFY] Error preserving UTM in link:', err);
-                        }
-                      }
-                    }
-                  }, true);
                 } catch (error) {
                   console.error('[UTMIFY] ❌ Error saving UTM parameters:', error);
                 }
